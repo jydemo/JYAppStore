@@ -26,9 +26,9 @@ extension UIView {
             bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
         }
     }
-    func anchor(_ top: NSLayoutXAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutXAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightcontant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) {
+    func anchor(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightcontant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) {
         translatesAutoresizingMaskIntoConstraints = false
-        //let _ =
+         _ = anchorWithReturnAnchors(top, left: left, bottom: bottom, right: right, topConstant: topConstant, leftConstant: leftConstant, bottomConstant: bottomConstant, rightcontant: rightcontant, widthConstant: widthConstant, heightConstant: heightConstant)
     }
     func anchorWithReturnAnchors(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightcontant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
         translatesAutoresizingMaskIntoConstraints = false
@@ -45,6 +45,14 @@ extension UIView {
         if let bottomm = bottom {
             anchors.append(bottomAnchor.constraint(equalTo: bottomm, constant: bottomConstant))
         }
+        if widthConstant > 0{
+            anchors.append(widthAnchor.constraint(equalToConstant: widthConstant))
+        }
+        if heightConstant > 0 {
+            anchors.append(heightAnchor.constraint(equalToConstant: heightConstant))
+        }
+        anchors.forEach { $0.isActive = true }
+        
         return anchors
     }
     func anchorCenterXToSuperview(constant: CGFloat = 0) {
@@ -59,7 +67,25 @@ extension UIView {
             centerYAnchor.constraint(equalTo: anchor, constant: constant)
         }
     }
+    func anchorCenterSuperview() {
+        anchorCenterXToSuperview()
+        anchorCenterYTosuperview()
+    }
 }
+
+extension UIImage {
+    convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+        let rect = CGRect(origin: .zero, size: size)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+        color.setFill()
+        UIRectFill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        guard let cgImage = image?.cgImage else { return nil }
+        self.init(cgImage: cgImage)
+    }
+}
+
 extension UIViewController {
     func showNavBar() {
         self.navigationController?.isNavigationBarHidden = false
