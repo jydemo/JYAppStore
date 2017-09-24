@@ -41,6 +41,7 @@ class DataSourceController: UICollectionViewController, UICollectionViewDelegate
     }
     
     public init() {
+        //collectionView必需初始化一个FlowLayout
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     
