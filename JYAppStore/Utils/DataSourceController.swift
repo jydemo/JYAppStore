@@ -24,11 +24,11 @@ class DataSourceController: UICollectionViewController, UICollectionViewDelegate
                 }
             }
             
-            /*if let headerClasses = datasource?.headerClasses() {
+            if let headerClasses = datasource?.headerClasses() {
                 for headerClass in headerClasses {
                     collectionView?.register(headerClass, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: headerClass.self))//NSStringFromClass(headerClass))
                 }
-            }*/
+            }
             
             /*if let footerClasses = datasource?.footerclasses() {
                 for footerClass in footerClasses {
@@ -64,8 +64,8 @@ class DataSourceController: UICollectionViewController, UICollectionViewDelegate
         activityIndicatorView.anchorCenterYTosuperview()
         
         collectionView?.register(DefaultCell.self, forCellWithReuseIdentifier: String(describing: DefaultCell.self))
-        /*collectionView?.register(DefauleHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: DefauleHeader.self))
-        collectionView?.register(DefaultFooter.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: String(describing: DefaultFooter.self))*/
+        collectionView?.register(DefauleHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: DefauleHeader.self))
+        /*collectionView?.register(DefaultFooter.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: String(describing: DefaultFooter.self))*/
     }
     
     override open func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -76,7 +76,7 @@ class DataSourceController: UICollectionViewController, UICollectionViewDelegate
         return datasource?.numberOfItems(section) ?? 0
     }
     
-    //need to override this otherwise size doesn't get called
+    //指定cell的大小，这里宽度为整个屏幕的宽度，高度为50
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 50)
     }
